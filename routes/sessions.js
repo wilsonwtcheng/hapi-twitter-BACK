@@ -104,6 +104,23 @@ var Joi 	 = require('joi'); //because it's a library. Help us to distinguish bet
 
  	},
 
+ 	{
+ 		method: "GET",
+ 		path: "/authenticated",
+ 		handler: function(request, reply) {
+ 			//retrieve the session information from the browser
+ 			var session = request.session.get("hapi_twitter_session");
+ 			var db = request.server.plugins["hapi-mongodb"].db
+ 			db.collection("sessions").findOne({"session_id": session.session_key}, function(err, result){
+ 				if (result === null) {
+ 					return reply( { "message" : "Unauthorized! NOT SIGNED IN YET!" } );
+				} else {
+					return reply ( { "message" : "Authorized. Congrats!" } );
+				}
+ 			});
+ 		}
+
+ 	}
 
  ])
 
