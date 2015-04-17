@@ -19,27 +19,7 @@ exports.register = function(server, options, next) {
           reply(tweets);
         });
       }
-    }
-
-    {
-  // Retrieve all tweets by a specific user
-      method: 'GET',
-      path: '/users/{username}/tweets',
-      handler: function(request, reply) {
-        var db = request.server.plugins['hapi-mongodb'].db;
-        var username = encodeURIComponent(request.params.username);
-
-        db.collection('users').findOne({ "username": username }, function(err, user) {
-          if (err) { return reply('Internal MongoDB error', err); }
-
-          db.collection('tweets').find({ "user_id": user._id }).toArray(function(err, tweets) {
-            if (err) { return reply('Internal MongoDB error', err); }
-
-            reply(tweets);
-          });
-        })
-      }
-    }
+    },
 
     {
       // Retrieve one tweet
@@ -57,7 +37,7 @@ exports.register = function(server, options, next) {
           reply(tweet);
         })
       }
-    }
+    },
 
     {
       // Create a new tweet
@@ -96,7 +76,7 @@ exports.register = function(server, options, next) {
           }
         }
       }
-    }
+    },
 
     {
       // Delete one tweet
@@ -120,8 +100,27 @@ exports.register = function(server, options, next) {
           }
         });
       }
-    }
+    },
 
+    {
+  // Retrieve all tweets by a specific user
+      method: 'GET',
+      path: '/users/{username}/tweets',
+      handler: function(request, reply) {
+        var db = request.server.plugins['hapi-mongodb'].db;
+        var username = encodeURIComponent(request.params.username);
+
+        db.collection('users').findOne({ "username": username }, function(err, user) {
+          if (err) { return reply('Internal MongoDB error', err); }
+
+          db.collection('tweets').find({ "user_id": user._id }).toArray(function(err, tweets) {
+            if (err) { return reply('Internal MongoDB error', err); }
+
+            reply(tweets);
+          });
+        })
+      }
+    },
 
   ]);
 

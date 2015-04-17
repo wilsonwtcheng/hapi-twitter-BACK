@@ -17,6 +17,7 @@ server.connection({
 var plugins = [ //make any new file, just load it here.
 	{ register: require('./routes/users.js') },
 	{ register: require('./routes/sessions.js') },
+	{ register: require('./routes/tweets.js') },
 	{ 
 		register: require('hapi-mongodb'),
 		options: {
