@@ -23,7 +23,7 @@ module.exports.authenticated =function(request, callback) {
  					});
 				} else {
 						return callback( { 
-		 				"message":"Already logged out / never logged in, sucker",
+		 				"message":"Hey!! LOGGED IN! Great success",
 		 				"authenticated" : true
  						});
 				}

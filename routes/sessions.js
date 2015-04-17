@@ -55,6 +55,7 @@ var Auth = require('./auth')
 							"session_key": randomKey,
 							"user_id": userMongo._id
 						});
+						
 						return reply(writeResult);
 					});
 					} else {
@@ -69,7 +70,7 @@ var Auth = require('./auth')
  		method: "GET",
  		path: "/authenticated",
  		handler: function(request, reply) {
- 			Auth.check_authentication(request, function(result) //authenticated is a name we came up with that will be referenced elsewhere.
+ 			Auth.authenticated(request, function(result) //authenticated is a name we came up with that will be referenced elsewhere.
  				{
  					reply(result);
 
@@ -85,18 +86,16 @@ var Auth = require('./auth')
  			//obtain the session
  			var session = request.session.get("hapi_twitter_session"); //hapi_twitter session was defined earlier, in login request.
  			//initialize db
- 			var db = request.server.plugins["hapi-mongodb"].db
+ 			var db = request.server.plugins["hapi-mongodb"].db;
  			//check if session exists
  			if(!session) {
  				return reply({"message":"Already logged out / never logged in, sucker"}); // return will terminate the rest of the program.
  			}
- 			//search for the same session in the db
- 	//		db.collection("sessions").findOne({"session_id": session.session_key}, function(err, result){
  			//remove that session in the db
 			db.collection("sessions").remove({"session_id": session.session_key}, function(err, writeResult) {
 				if(err) {return reply("Internal MongoDB error", err);}
-			});
 				return reply(writeResult);
+			});
 			}
  		}
 
