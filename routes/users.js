@@ -16,7 +16,7 @@ var Joi 	 = require('joi'); //because it's a library. Help us to distinguish bet
      			return reply('Internal MongoDB error', err); 
      		}
      			reply(users);
-     			console.log("great success! Listing all users");
+     			console.log("great success! User registered.");
      	})
      }
    },
@@ -56,9 +56,9 @@ var Joi 	 = require('joi'); //because it's a library. Help us to distinguish bet
  		validate: {
  				payload: {
  					userInfo: {
- 						username: Joi.string().min(5).max(20).required(), 
+ 						username: Joi.string().min(3).max(20).required(), 
  						email: Joi.string().email().max(50).required(),  
- 						password: Joi.string().min(5).max(20).required(),
+ 						password: Joi.string().min(3).max(20).required(),
  					}
  				}
  		}

@@ -3,16 +3,16 @@ var Hapi = require('hapi'); //goes to node modules and finds hapi. html usually 
 var server = new Hapi.Server();
 
 
-
-
 server.connection({
 	host: '0.0.0.0', //same as localhost. 
 	port: process.env.PORT || 3000, //if you want to deploy to hiroku, then need to add the stuff at the front. It's an environment variable prepared by Heroku deployment. If can find, use that, otherwise, use 3000. Heroku is a remote server on the internet.
 	routes: {
-		cors : true //anyone on any computer can be made outside of the main name. eg. harrychen.com, if no cors true thenonly harrychen.com can make request.
+		cors: {
+      headers: ['Access-Control-Allow-Credentials'],
+      credentials: true
+		} //true //anyone on any computer can be made outside of the main name. eg. harrychen.com, if no cors true thenonly harrychen.com can make request.
 	}
 });
-
 
 var plugins = [ //make any new file, just load it here.
 	{ register: require('./routes/users.js') },
@@ -28,6 +28,7 @@ var plugins = [ //make any new file, just load it here.
 			}
 		}
 	}, 
+
 	{
 		register: require('yar'),
 		options: {
