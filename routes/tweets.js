@@ -27,13 +27,10 @@ exports.register = function(server, options, next) {
       path: '/tweets/{id}',
       handler: function(request, reply) {
         var tweet_id = encodeURIComponent(request.params.id);
-
         var db = request.server.plugins['hapi-mongodb'].db;
         var ObjectId = request.server.plugins['hapi-mongodb'].ObjectID;
-
         db.collection('tweets').findOne({ "_id": ObjectId(tweet_id)}, function(err, tweet) {
           if (err) { return reply('Internal MongoDB error', err); }
-
           reply(tweet);
         })
       }
@@ -50,18 +47,14 @@ exports.register = function(server, options, next) {
               var db = request.server.plugins['hapi-mongodb'].db;
               var session = request.session.get('hapi_twitter_session');
               var ObjectId = request.server.plugins['hapi-mongodb'].ObjectID;
-
               var tweet = { 
                 "message": request.payload.tweet.message,
                 "user_id": ObjectId(session.user_id)
               };
-
               db.collection('tweets').insert(tweet, function(err, writeResult) {
                 if (err) { return reply('Internal MongoDB error', err); }
-
                 reply(writeResult);
               });
-
             } else {
               reply(result.message);
             }

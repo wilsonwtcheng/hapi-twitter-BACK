@@ -47,7 +47,7 @@ var Joi 	 = require('joi'); //because it's a library. Help us to distinguish bet
 			     			return reply("you suck ass, usercreate FAIL");
 			     		}
 			     			reply(writeResult);
-			     			console.log("awesome man!")
+			     			console.log("sign up successful! awesome man!")
 		   			});
 		   		});
 				})

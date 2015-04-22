@@ -9,7 +9,7 @@ module.exports.authenticated =function(request, callback) {
  			//check if session exists
  			if(!session) {
  				return callback({
- 				"message":"Already logged out / never logged in, sucker",
+ 				"message":"No session: already logged out / never logged in",
  				"authenticated" : false
  				}); // return will terminate the rest of the program.
  			}
@@ -18,7 +18,7 @@ module.exports.authenticated =function(request, callback) {
  			db.collection("sessions").findOne({"session_id": session.session_key}, function(err, result){
  				if (result === null) {
  					return callback( {
-	 				"message":"Already logged out / never logged in, sucker",
+	 				"message":"Session not found in database. Already logged out / never logged in?",
 	 				"authenticated" : false
  					});
 				} else {

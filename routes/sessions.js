@@ -55,7 +55,6 @@ var Auth = require('./auth')
 							"session_key": randomKey,
 							"user_id": userMongo._id
 						});
-						
 						return reply(writeResult);
 					});
 					} else {
@@ -73,7 +72,6 @@ var Auth = require('./auth')
  			Auth.authenticated(request, function(result) //authenticated is a name we came up with that will be referenced elsewhere.
  				{
  					reply(result);
-
  				});
  		}
  	},
@@ -89,7 +87,7 @@ var Auth = require('./auth')
  			var db = request.server.plugins["hapi-mongodb"].db;
  			//check if session exists
  			if(!session) {
- 				return reply({"message":"Already logged out / never logged in, sucker"}); // return will terminate the rest of the program.
+ 				return reply({"message":"Already logged out / never logged in"}); // return will terminate the rest of the program.
  			}
  			//remove that session in the db
 			db.collection("sessions").remove({"session_id": session.session_key}, function(err, writeResult) {
